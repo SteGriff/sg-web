@@ -140,8 +140,15 @@ background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox=
 	<script>
 		function toggleDark()
 		{
-			const html = document.querySelector('html');
-			if (!html.classList.replace('light', 'dark')) html.classList.replace('dark', 'light');
+			var classes = document.querySelector('html').classList;
+			if (classes.contains('light'))
+			{
+				classes.replace('light', 'dark');
+			}
+			else
+			{
+				classes.replace('dark', 'light');
+			}			
 		}
 	</script>
 </body>
