@@ -80,7 +80,7 @@ background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox=
 	<main class="
 		ma3 ma4-l f4
 		">
-		<button class="border ba bw2 fill fr pointer br3" onclick="toggleDark()">⛅</button>
+		<button class="border ba bw2 fill fr pointer br3" onclick="ste.toggleDark()">⛅</button>
 		
 		<div class="cf
 			pv5
@@ -117,19 +117,13 @@ background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox=
 			</div>
 			
 			<div class="cf">
-				<h2>What I've written recently:</h2>
-				<div class="flex-ns">
+				<h2>Recent posts on <a href="/upblog">Upblog</a>:</h2>
+				<div class="flex-ns js-posts">
 					<div class="b--blue ba br3 fill 
-					pa1 ph3 mt1
-					mr3-ns w-40-ns">
-						<h3>Title</h3>
-						<p>Scalable Vector Graphics, SVG, is a W3C XML dialect to mark up graphics. It is partially implemented in Firefox, Opera, WebKit browsers, Internet Explorer and other browsers.</p>
-					</div>
-					<div class="b--blue ba br3 fill
-					pa1 ph3 mt1
-					mr3-ns w-40-ns">
-						<h3>Title</h3>
-						<p>Scalable Vector Graphics, SVG, is a W3C XML dialect to mark up graphics. It is partially implemented in Firefox, Opera, WebKit browsers, Internet Explorer and other browsers.</p>
+					pa1 ph3 mt2
+					mr3-ns w-40-ns js-loading">
+						<h3>Fetching posts...</h3>
+						<p>I'm just getting the latest</p>
 					</div>
 
 				</div>
@@ -138,18 +132,43 @@ background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox=
 		
 	</main>
 	<script>
-		function toggleDark()
+	app = function()
+	{
+		this.toggleDark = function()
 		{
 			var classes = document.querySelector('html').classList;
-			if (classes.contains('light'))
-			{
-				classes.replace('light', 'dark');
-			}
-			else
-			{
-				classes.replace('dark', 'light');
-			}			
-		}
+			if (classes.contains('light')) classes.replace('light', 'dark')
+			else classes.replace('dark', 'light')
+		};
+		
+		loading = document.querySelector('.js-loading');
+		posts = document.querySelector('.js-posts');
+		data = [];
+		
+		create = (p) => {
+			posts.insertAdjacentHTML('beforeend', post(p));
+		};
+			
+		post = function (p){
+			return `
+				<div class="b--blue ba br3 fill 
+				pa1 ph3 mt2
+				mr3-ns w-40-ns">
+				<h3><a href="upblog/${p.link}">${p.title}</a></h3>
+				<p>${p.summary}</p>
+				<span class="f6"><time datetime="${p.ymd}">${p.engdt}</time></span>
+				</div>`;
+		}	
+		
+		setup = (() => {
+			fetch('/upblog/summaries_json?limit=3').then(r => r.text().then(function(t){
+				data = JSON.parse(t);
+				data.forEach(p => create(p));
+				loading.parentNode.removeChild(loading);
+			}));
+		})();
+	};
+	var ste = new app();
 	</script>
 </body>
 

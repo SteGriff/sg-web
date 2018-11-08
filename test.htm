@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+</style>
+</head>
+<body>
+<main>
+	<h1>Title</h1>
+	<div class="js-posts">
+	
+	</div>
+</main>
+<script>
+	const app = (function()
+	{
+		main = document.querySelector('.js-posts');
+		data = [{"file":"posts\/easy-and-free-ways-to-host-a-static-website.md","link":"easy-and-free-ways-to-host-a-static-website","title":"Easy and free ways to host a static website","created":1534256750,"modified":1534256750,"ymd":"2018-08-14","engdt":"14th August 2018","summary":"I like to tell people to keep a technical blog because it's good for your skills, your employer, your employability, the tech sector, and the economy at large. So today I want to share ways of starting..."},{"file":"posts\/host-html-on-github-pages-without-using-git.md","link":"host-html-on-github-pages-without-using-git","title":"Host HTML on GitHub Pages without using git","created":1534256695,"modified":1534256695,"ymd":"2018-08-14","engdt":"14th August 2018","summary":"This is a companion post for easy and free ways to host a static website. Here's how you can use the GitHub web interface to make a new HTML website without touching git or the command line!\nOpen GitHub..."},{"file":"posts\/windows-service-starts-multiple-instances-of-out-of-process-local-com-server.md","link":"windows-service-starts-multiple-instances-of-out-of-process-local-com-server","title":"Windows Service starts multiple instances of out-of-process local COM Server","created":1530719615,"modified":1530719615,"ymd":"2018-07-04","engdt":"4th July 2018","summary":"Here is a problem I can't solve. I have a 32-bit client application which calls in to a third party out-of-process COM server (also 32-bit). My client application is a C# app built on Topshelf, so it can..."},{"file":"posts\/magically-make-an-azure-ad-user-into-a-local-machine-admin.md","link":"magically-make-an-azure-ad-user-into-a-local-machine-admin","title":"Magically make an Azure AD user into a local machine admin","created":1530719537,"modified":1530719537,"ymd":"2018-07-04","engdt":"4th July 2018","summary":"If you have standard Azure AD, it's difficult to make a user into admin on their machine without making them a hardware\/global admin across the whole Azure estate (which is not desirable). Through a chain..."},{"file":"posts\/unit-integration-testing-a-project-which-calls-an-asp-net-mvc-site.md","link":"unit-integration-testing-a-project-which-calls-an-asp-net-mvc-site","title":"Unit\/Integration testing a project which calls an ASP.Net MVC site","created":1528451655,"modified":1528451655,"ymd":"2018-06-08","engdt":"8th June 2018","summary":"In Visual Studio, running Tests does not run your Startup Projects. This is a pain if you're integration testing, and your client program calls an endpoint of your ASP.Net MVC or Web API site, because..."}];
+		
+		create = (p) => {
+			main.insertAdjacentHTML('beforeend', post(p));
+		};
+			
+		post = function (p){
+			return `
+				<div class="b--blue ba br3 fill 
+				pa1 ph3 mt2
+				mr3-ns w-40-ns">
+				<h3><a href="upblog/${p.link}">${p.title}</a></h3>
+				<p>${p.summary}</p>
+				<span class="f6"><time datetime="${p.ymd}">${p.engdt}</time></span>
+				</div>`;
+		}	
+		
+		setup = (() => {
+			data.forEach(p => create(p));
+		})();
+	})();
+
+</script>
+</body>
+</html>
